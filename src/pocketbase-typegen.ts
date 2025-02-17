@@ -11,6 +11,7 @@ export enum Collections {
 	Mfas = "_mfas",
 	Otps = "_otps",
 	Superusers = "_superusers",
+	Personnes = "personnes",
 	Users = "users",
 }
 
@@ -85,6 +86,36 @@ export type SuperusersRecord = {
 	verified?: boolean
 }
 
+export enum PersonnesNationaliteOptions {
+	"Français" = "Français",
+	"Française" = "Française",
+	"Américain" = "Américain",
+	"Américaine" = "Américaine",
+	"Britannique" = "Britannique",
+}
+
+export enum PersonnesPreofessionOptions {
+	"acteur" = "acteur",
+	"actrice" = "actrice",
+	"réalisateur" = "réalisateur",
+	"réalisatrice" = "réalisatrice",
+	"producteur" = "producteur",
+	"productrice" = "productrice",
+	"scénariste" = "scénariste",
+}
+export type PersonnesRecord = {
+	created?: IsoDateString
+	date_deces?: IsoDateString
+	date_naissance?: IsoDateString
+	id: string
+	lieu_naissance?: string
+	nationalite?: PersonnesNationaliteOptions
+	nom?: string
+	prenom?: string
+	preofession?: PersonnesPreofessionOptions
+	updated?: IsoDateString
+}
+
 export type UsersRecord = {
 	avatar?: string
 	created?: IsoDateString
@@ -104,6 +135,7 @@ export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRec
 export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemFields<Texpand>
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
+export type PersonnesResponse<Texpand = unknown> = Required<PersonnesRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
@@ -114,6 +146,7 @@ export type CollectionRecords = {
 	_mfas: MfasRecord
 	_otps: OtpsRecord
 	_superusers: SuperusersRecord
+	personnes: PersonnesRecord
 	users: UsersRecord
 }
 
@@ -123,6 +156,7 @@ export type CollectionResponses = {
 	_mfas: MfasResponse
 	_otps: OtpsResponse
 	_superusers: SuperusersResponse
+	personnes: PersonnesResponse
 	users: UsersResponse
 }
 
@@ -135,5 +169,6 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: '_mfas'): RecordService<MfasResponse>
 	collection(idOrName: '_otps'): RecordService<OtpsResponse>
 	collection(idOrName: '_superusers'): RecordService<SuperusersResponse>
+	collection(idOrName: 'personnes'): RecordService<PersonnesResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 }
