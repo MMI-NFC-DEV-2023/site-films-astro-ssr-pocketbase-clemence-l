@@ -94,7 +94,7 @@ export enum PersonnesNationaliteOptions {
 	"Britannique" = "Britannique",
 }
 
-export enum PersonnesPreofessionOptions {
+export enum PersonnesProfessionOptions {
 	"acteur" = "acteur",
 	"actrice" = "actrice",
 	"réalisateur" = "réalisateur",
@@ -112,7 +112,7 @@ export type PersonnesRecord = {
 	nationalite?: PersonnesNationaliteOptions
 	nom?: string
 	prenom?: string
-	preofession?: PersonnesPreofessionOptions
+	profession?: PersonnesProfessionOptions[]
 	updated?: IsoDateString
 }
 
