@@ -10,4 +10,10 @@ const film = Astro.props;
 
 ---
 
-<a href={`/films/${film.id}-${slugger.slug(film.titre)}`}>{film.titre}</a>
+<a 
+    href={`/films/${film.id}-${slugger.slug(film.titre)}`}
+    class="p-20 m-20 bg-white shadow-sm rounded-lg"
+>
+{film.titre}
+
+</a>
