@@ -1,12 +1,15 @@
 ---
 import { Debug } from "astro:components";
+import Layout from "../../layouts/Layout.astro";
+import LinkPersonne from "../../components/LinkPersonne.astro";
+export const prerender = false
 
-export const prerender = false;
+const listPersonnes = await Astro.locals.pb.collection("personnes")
+    .getFullList();
 
-const personnes = await Astro.locals.pb
-    .collection("personnes")
-    .getFullList({ expand: ""});
 ---
 
-<pre>{JSON.stringify(personnes, null, 2)}</pre>
-<Debug {personnes} />
+<Layout pageTitle="Liste des personnes">
+    {listPersonnes.map(personne => <LinkPersonne {...personne} />)}
+    <!-- <Debug {listFilms} /> -->
+</Layout>
