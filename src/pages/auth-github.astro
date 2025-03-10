@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+---
+
+<Layout pageTitle="Authentification avec Github">
+    <button id="connectGit">
+        Se connecter avec Github
+    </button>
+</Layout>
+
+<script>
+    import PocketBase from 'pocketbase';
+
+    document.querySelector('#connectGit')?.addEventListener('click', async () => {
+        const authData = await pb.collection('users').authWithOAuth2({ provider: 'github' });
+        document.cookie = pb.authStore.exportToCookie({httpOnly: false});
+    });
+    
+    const pb = new PocketBase('https://pocketbase.io');
+</script>
