@@ -1,0 +1,80 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+
+import { PersonnesNationaliteOptions } from "../../../pocketbase-typegen";
+import { PersonnesProfessionOptions } from "../../../pocketbase-typegen";
+
+export const prerender = false;
+
+const pb = Astro.locals.pb;
+if (Astro.request.method === "POST") {
+    const data = await Astro.request.formData();
+    const personne = await pb.collection("personnes").create(data);
+    return Astro.redirect(`/personnes/${personne.id}-${personne.nom}`);
+}
+---
+
+<Layout pageTitle="Modifier une personne">
+    <h1 class="font-bold text-3xl text-center mb-20">Éditer une personne</h1>
+
+    <form action="post">
+        <label class="flex flex-col">
+            Date de décès
+            <input type="date" name="date_deces" class="border mb-10 rounded-lg p-2" />
+        </label>
+        <label class="flex flex-col">
+            Date de naissance
+            <input type="date" name="date_naissance" class="border mb-10 rounded-lg p-2" />
+        </label>
+        <label class="flex flex-col">
+            Lieu de naissance
+            <input type="text" name="lieu_naissance" class="border mb-10 rounded-lg p-2" />
+        </label>
+        <label class="flex flex-col">
+            Nom
+            <input type="text" name="nom" class="border mb-10 rounded-lg p-2" />
+        </label>
+        <label class="flex flex-col">
+            Prénom
+            <input type="text" name="prenom" class="border mb-10 rounded-lg p-2" />
+        </label>
+        
+        <!-- <label class="flex flex-col">
+            Nationalité
+            <select name="nationalite" class="border mb-10 rounded-lg p-2">
+                <option>Français</option>
+                <option>Française</option>
+                <option>Américain</option>
+                <option>Américaine</option>
+                <option>Britannique</option>
+            </select>
+        </label> -->
+
+        <label class="flex flex-col">
+            nationalite
+            <select name="nationalite" class="border mb-10 rounded-lg p-2">
+                {
+                Object.entries(PersonnesNationaliteOptions    ).map(([key, value]) => (
+                    <option value={key}>{value}</option>
+                ))
+                }
+            </select>
+        </label>
+
+
+        <label class="flex flex-col">
+            Profession
+            <select name="profession" multiple class="border mb-10 rounded-lg p-2">
+                {
+                Object.entries(PersonnesProfessionOptions).map(([key, value]) => (
+                    <option value={key}>{value}</option>
+                ))
+                }
+            </select>
+        </label>
+
+
+
+        <button>Envoyer</button>
+    </form>
+</Layout>
